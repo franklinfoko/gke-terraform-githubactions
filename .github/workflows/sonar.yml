@@ -11,7 +11,7 @@ on:
 jobs:
   code-analysis-sonarCube:
     name: Build
-    runs-on: gke-runner
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4.1.1
         with:
