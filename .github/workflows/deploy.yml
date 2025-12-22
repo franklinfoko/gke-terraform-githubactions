@@ -47,14 +47,14 @@ jobs:
         run: |
           # Set the GKE cluster credentials
           gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1
-          sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g; s/VERSION/$VERSION/g kubernetes/deploy"
+          sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g; s/VERSION/$VERSION/g" kubernetes/deployment-blue-green.yaml
           # Deploy the green version
           kubectl apply -f kubernetes/deployment-blue-green.yaml
           sleep 300
-          sed -i "s/VERSION/$VERSION/g" kubernetes/services.yaml
-          kubectl apply -f kubernetes/services.yaml
-          # wait for the deployment to be ready
-          kubectl rollout status deployment franklin-blue-green-${VERSION}
+          sed -i "s/VERSION/$VERSION/g" kubernetes/service.yaml
+          kubectl apply -f kubernetes/service.yaml
+          # Wait for the deployment to be ready
+          kubectl rollout status deployment codewithmuh-blue-green-${VERSION}
           sleep 80
       - name: Cleanup old deployments
         env:
