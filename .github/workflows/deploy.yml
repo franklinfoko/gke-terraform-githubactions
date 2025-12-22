@@ -54,7 +54,7 @@ jobs:
           sed -i "s/VERSION/$VERSION/g" kubernetes/service.yaml
           kubectl apply -f kubernetes/service.yaml
           # Wait for the deployment to be ready
-          kubectl rollout status deployment codewithmuh-blue-green-${VERSION}
+          kubectl rollout status deployment franklin-blue-green-${VERSION}
           sleep 80
       - name: Cleanup old deployments
         env:
