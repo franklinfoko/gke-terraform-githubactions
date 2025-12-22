@@ -46,7 +46,7 @@ jobs:
           VERSION: ${{steps.version.outputs.VERSION}}
         run: |
           # Set the GKE cluster credentials
-          gcloud container clusters get-credentials autopilot-cluster-3 --region us-central1
+          gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1
           sed -i "s/GOOGLE_PROJECT/$GOOGLE_PROJECT/g; s/VERSION/$VERSION/g kubernetes/deploy"
           # Deploy the green version
           kubectl apply -f kubernetes/deployment-blue-green.yaml
