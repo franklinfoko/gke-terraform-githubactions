@@ -17,7 +17,7 @@ spec:
       containers:
         - name: franklin
           #image: us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/frontend/franklinfoko:${VERSION}
-          image: us-central1-docker.pkg.dev/gke-terraform-sample-franklin/frontend
+          image: us-central1-docker.pkg.dev/gke-terraform-sample-franklin/frontend/franklinfoko
           ports:
             - containerPort: 80
               name: http
