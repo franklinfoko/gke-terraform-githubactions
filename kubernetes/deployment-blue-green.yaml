@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: franklin-blue-green-VERSION
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: franklin
+      version: "VERSION"
+  template:
+    metadata:
+      labels:
+        name: franklin
+        version: "VERSION"
+    spec:
+      containers:
+        - name: franklin
+          image: us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/frontend/franklinfoko:${VERSION}
+          ports:
+            - containerPort: 80
+              name: http

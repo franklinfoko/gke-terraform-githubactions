@@ -1,0 +1,35 @@
+name: Trivy Image Scan
+
+on:
+  workflow_run:
+    workflows:
+      - Build
+    types:
+      - completed
+
+jobs:
+  docker-image-scan:
+    name: Docker Images Scan
+    runs-on: self-hosted
+    steps:
+      - name: Check Repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Set version
+        id: version
+        run: echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Pull the Docker image from Artifactory Registry
+        env:
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
+          VERSION: ${{steps.version.outputs.VERSION}}
+        run: |
+          docker pull us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/frontend/franklinfoko:${VERSION}
+
+      - name: Trivy image scan
+        env:
+          GOOGLE_PROJECT: ${{ secrets.GOOGLE_PROJECT}}
+          VERSION: ${{steps.version.outputs.VERSION}}
+        run: |
+          trivy image us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/frontend/franklinfoko:${VERSION}
+         
